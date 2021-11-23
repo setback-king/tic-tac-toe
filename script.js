@@ -80,6 +80,7 @@ computerForm.addEventListener('click', (e) =>{
     
     startGame();
     updateComputerPlayers()
+    // run code here for AI algorithm
 })
 
 
@@ -116,8 +117,15 @@ function winGame() {
         results.style.display = "flex";
         winner.textContent = "Player 2 wins the game!"
         turn = 'playerOne';
-    
     } 
+    else if (gameboard[0] !== undefined && gameboard[1] !== undefined && gameboard[2] !== undefined && gameboard[3] !== undefined && gameboard[4] !== undefined
+        && gameboard[5] !== undefined && gameboard[6] !== undefined && gameboard[7] !== undefined && gameboard[8] !== undefined) {
+        gameOptions.style.display = 'none';
+        results.style.display = "flex";
+        winner.textContent = "Tie! Nobody won the game.";
+        turn = 'playerOne';
+    }
+
    
 }
 
