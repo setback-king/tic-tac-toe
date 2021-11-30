@@ -2,9 +2,6 @@ body {
     margin: 0px;
     padding: 0;
     background-color: rgb(233, 240, 214);
-    
-   
-   
 }
 
 
@@ -39,7 +36,7 @@ label {
 .options {
     font-family: 'Knewave', 'cursive';
     font-size: 20px; 
-    width: 130px;
+   
 }
 
 .container {
@@ -51,6 +48,7 @@ label {
     text-align: center;
     background-color: rgb(233, 240, 214);
     font-size: 80px;
+    flex-wrap: wrap;
 
 }
 
@@ -139,8 +137,8 @@ label {
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     flex-wrap: wrap;
-    width: 370px;
-    height: 370px;
+    width: 330px;
+    height: 330px;
     background-color: rgb(233, 240, 214);
     border-radius: 30px;
     
