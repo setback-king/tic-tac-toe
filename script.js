@@ -7,8 +7,8 @@ const targetDiv = document.getElementById("game");
 const gameSetup = document.getElementById('gameSetup');
 const humanForm = document.getElementById('human');
 const computerForm = document.getElementById('computer');
-const playerOneInput = document.querySelector('.playerOne');
-const playerTwoInput = document.querySelector('.playerTwo');
+const playerOneInput = document.getElementsByName('playerOne')[0];
+const playerTwoInput = document.getElementsByName('playerTwo')[0];
 const playerOneInputAi = document.querySelector('.playerOneAI');
 const playerTwoInputAi = document. querySelector('.playerTwoAI');
 const playerOne =  document.querySelector('.playerOneName');
@@ -18,7 +18,9 @@ const turnTwo = document.querySelector('.playersTwo');
 const winner = document.querySelector('.results');
 const results = document.getElementById('results')
 const gameOptions = document.querySelector('.gameOptions')
+
 let turn = 'playerOne'
+
 
 
 function createGame(array) {
@@ -31,6 +33,9 @@ function createGame(array) {
 function updateHumanPlayers(){
     playerOne.textContent = playerOneInput.value;
     playerTwo.textContent = playerTwoInput.value;
+   
+    
+
 }
 
 function updateComputerPlayers(){
@@ -48,7 +53,10 @@ function startGame() {
         gameOptions.style.display = 'none';
         playerOneInput.value = '';
         playerTwoInput.value = '';
-        turn = 'playerOne'
+        playerOneInputAi.value = '';
+        turn = 'playerOne';    
+        location.reload();
+ 
     }
      else {
     targetDiv.style.display = "flex";
@@ -56,33 +64,45 @@ function startGame() {
     }
 };
 
+
+game.addEventListener('click', (e) => {
+        if (e.target.matches('button')) {
+            restartGame();
+            turn = 'playerOne';
+        }
+    })
+
 humanForm.addEventListener('click', (e) => {
     if (!e.target.matches('button')) {
         return;
-      }
-      else if (playerOneInput.value.length === 0 || playerTwoInput.value.length === 0) {
+    }
+    else if (playerOneInput.value.length === 0 || playerTwoInput.value.length === 0) {
         alert("Please enter names for both players")
         return
-      }
+    }
     
     startGame();
-    updateHumanPlayers()
+    updateHumanPlayers();
+    humanPlay();
+
 })
 
 computerForm.addEventListener('click', (e) =>{
     if (!e.target.matches('button')) {
         return;
-      }
-      else if (playerOneInputAi.value.length === 0) {
+    }
+    else if (playerOneInputAi.value.length === 0) {
         alert("Please enter a name for Player One")
         return
-      }
+    }
     
     startGame();
     updateComputerPlayers()
+    gamePlayAI();
+    
     // run code here for AI algorithm
 })
-
+    
 
 function restartGame() {
     gameboard = [];
@@ -93,9 +113,11 @@ function restartGame() {
     turn = 'playerOne';
     turnOne.style.border = 4 + 'px' + ' solid black';
     turnTwo.style.border = 'none';
-
+    
 
 }
+
+
 
 function winGame() {
     if ((gameboard[0] === 'x' && gameboard[1] === 'x' && gameboard[2] === 'x') || (gameboard[0] === 'x' && gameboard[4] === 'x' && gameboard[8] === 'x') ||
@@ -104,7 +126,7 @@ function winGame() {
     (gameboard[2] === 'x' && gameboard[5] === 'x' && gameboard[8] === 'x') || (gameboard[2] === 'x' && gameboard[4] === 'x' && gameboard[6] === 'x')) {
         gameOptions.style.display = 'none';
         results.style.display = "flex";
-        winner.textContent = "Player 1 wins the game!";
+        winner.textContent = `${playerOne.textContent} wins the game!`
         turn = 'playerOne';
       
     }
@@ -115,7 +137,7 @@ function winGame() {
     (gameboard[2] === 'o' && gameboard[4] === 'o' && gameboard[6] === 'o')) {
         gameOptions.style.display = 'none';
         results.style.display = "flex";
-        winner.textContent = "Player 2 wins the game!"
+        winner.textContent = `${playerTwo.textContent} wins the game!`
         turn = 'playerOne';
     } 
     else if (gameboard[0] !== undefined && gameboard[1] !== undefined && gameboard[2] !== undefined && gameboard[3] !== undefined && gameboard[4] !== undefined
@@ -129,13 +151,10 @@ function winGame() {
    
 }
 
-
-game.addEventListener('click', (e) => {
-    if (e.target.matches('button')) {
-        restartGame();
-        turn = 'playerOne';
-    }
-        else if (e.target.classList.contains('box')) {
+function humanPlay() {
+if (true) {
+  game.addEventListener('click', (e) => {
+  if (e.target.classList.contains('box')) {
             if (turn === 'playerOne' && e.target.textContent === '') {
             e.target.textContent = "x";
             gameboard[e.target.getAttribute('dataset')] = 'x';
@@ -153,10 +172,61 @@ game.addEventListener('click', (e) => {
                 turnTwo.style.border = 'none';
                 winGame();
                 return
-            }
+            } 
+            
         }
 
 
     return
     
-});
+}); 
+}
+}
+
+function computerPlay(){
+    let i = ~~(Math.random() * 9)
+    if (gameboard[i] === undefined) {
+       return gameboard[i] = 'o';
+       
+    }
+        else if (gameboard[i] !== undefined) {
+            computerPlay();
+        }
+}
+
+
+
+function gamePlayAI () {
+    if (turn === 'playerOne') {
+        game.addEventListener('click', (e) => {
+            if (e.target.classList.contains('box')) {
+                        if (e.target.textContent === '') {
+                        e.target.textContent = "x";
+                        gameboard[e.target.getAttribute('dataset')] = 'x';
+                        turn = 'playerTwo'
+                        turnTwo.style.border = 4 + 'px' + ' solid black';
+                        turnOne.style.border = 'none';
+                        winGame();
+                        gamePlayAI();
+                        return
+                        }
+                    }
+                    
+                })
+                
+         }  
+        else if (turn === 'playerTwo') {
+
+                computerPlay();
+                setTimeout(createGame(gameboard), 1000);
+                turn = 'playerOne';
+                turnOne.style.border = 4 + 'px' + ' solid black';
+                turnTwo.style.border = 'none';
+                winGame();
+                return
+           }   
+          
+}
+               
+
+
