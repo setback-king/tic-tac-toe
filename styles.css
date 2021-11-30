@@ -126,7 +126,6 @@ label {
 }
 
 .gameSettings {
-    height: 450px;
     display: flex;
     margin: auto;
     justify-content: center;
