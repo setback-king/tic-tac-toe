@@ -19,10 +19,12 @@ label {
     display: none;
     flex-direction: column;
     text-align: center;
+    flex-wrap: wrap;
 }
 
 #gameSetup {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .gameOptions {
@@ -42,13 +44,14 @@ label {
 .container {
     display: flex;
     margin: auto;
-    height: 430px;
+    margin-bottom: 30px;
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
     background-color: rgb(233, 240, 214);
     font-size: 80px;
     flex-wrap: wrap;
+    gap: 15px;
 
 }
 
@@ -128,6 +131,7 @@ label {
     margin: auto;
     justify-content: center;
     gap: 50px;
+    flex-wrap: wrap;
   
 }
 
@@ -136,11 +140,11 @@ label {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
-    flex-wrap: wrap;
-    width: 330px;
-    height: 330px;
+    width: 370px;
+    height: 370px;
     background-color: rgb(233, 240, 214);
     border-radius: 30px;
+    
     
    
   
